@@ -1,0 +1,434 @@
+body {
+  padding: 50px;
+  font: 20px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #444c5c; /* Lightened the background for better contrast */
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+}
+.container-fluid {
+  flex: 1;
+}
+
+
+/* Link styles */
+a {
+  color: #00B7FF;
+  transition: color 0.3s ease; /* Smooth transition for hover effects */
+}
+
+/* Ensure the image is responsive and aligns with the container properly */
+.img-fluid.h-100 {
+    max-height: 100%; /* Ensures the image is not taller than its container */
+    object-fit: cover; /* Ensures the image covers the area without stretching */
+}
+
+/* Scrollable column styles */
+.scrollable-column {
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #dee2e6;
+    border-radius: .25rem;
+    padding: 1rem;
+}
+
+.scrollable-column li {
+    margin-bottom: 7px;
+}
+.reset {
+    top: 50px
+}
+/* Custom scrollbar for Webkit browsers and standard scrollbar for others */
+.scrollable-column::-webkit-scrollbar,
+.scrollable-column::-webkit-scrollbar-thumb {
+    width: 12px;
+}
+.scrollable-column::-webkit-scrollbar-thumb {
+    background-color: #888; /* Custom scrollbar color */
+}
+
+.column-content {
+    height: 400px;
+    overflow-y: scroll;
+    padding: 1rem;
+    border: 1px solid #956581;
+    border-radius: .35rem;
+}
+
+.nav-item {
+    margin-bottom: 20px;
+}
+
+.top-nav {
+    margin-top: 300px;
+}
+
+.table-title {
+    text-align: center;
+}
+
+.info-table {
+    margin-left: 20%;
+}
+
+.custom-table tr:hover {
+    background-color: #555; /* Slightly darker for hover effect */
+}
+
+.custom-table th, .custom-table td {
+    padding: 12px 15px;
+    border: 1px solid #cf8989;
+    text-align: left;
+    color: #dee2e6;
+}
+
+.bg-light {
+    min-height: 400px;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+.full-height-col {
+    height: 100vh;
+    width: 150px;
+    background-color: #2b1010;
+}
+
+.col-md-2.bg-light.full-height-col {
+    background-color: #202123 !important; /* Overrides bootstrap color */
+}
+
+.nav-link {
+    color: white !important;
+    transition: color 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.nav-link:hover {
+    color: #00B7FF !important; /* Hover color for links */
+}
+
+.btn {
+    color: white !important;
+    background-color: #343541;
+    transition: background-color 0.3s ease; /* Smooth background transition for hover effects */
+}
+
+.btn:hover {
+    background-color: #50515e; /* Hover color for buttons */
+}
+
+.form-group{
+    color: #2b1010;
+}
+
+
+body {
+  font-family: 'Roboto', sans-serif;
+  padding: 0;
+  margin: 0;
+}
+
+small {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+h1 {
+  text-align: center;
+  padding: 50px 0;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: -1px;
+  color: inherit;
+  font-size: 40px;
+}
+
+h2 {
+  text-align: center;
+  font-size: 30px;
+  margin: 0;
+  font-weight: 300;
+  color: inherit;
+  padding: 50px;
+}
+
+.center {
+  text-align: center;
+}
+
+section {
+  height: 100vh;
+}
+
+/* https://codepen.io/maheshambure21/pen/QwXaRw */
+/* Circle */
+
+
+/* SHIFT */
+nav.shift ul li a {
+  position: relative;
+  z-index: 1;
+  transition: color 0.3s ease; /* Add transition for text color */
+}
+
+nav.shift ul li a:hover {
+  color: #91640F;
+}
+
+nav.shift ul li a:after {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  width: 100%;
+  height: 10%;
+  content: '.';
+  color: transparent;
+  background: #004e92;
+  visibility: hidden; /* Change from none to hidden */
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.5s ease, height 0.5s ease; 
+}
+
+nav.shift ul li a:hover:after {
+  opacity: 1;
+  visibility: visible;
+  height: 100%;
+  border-radius: 10px;
+}
+
+.active-menu-item {
+  background-color: #004e92; /* Replace with your desired color */
+  border-radius: 10px;
+}
+
+/* footer */
+/* https://enlear.academy/29-footer-examples-for-website-671ed148b969 */
+.site-footer
+{
+  background-color:#26272b;
+  padding:45px 0 20px;
+  font-size:15px;
+  line-height:24px;
+  color:#737373;
+  margin-left: 150px;
+  padding-top: 20px;
+  
+}
+.site-footer hr
+{
+  border-top-color:#bbb;
+  opacity:0.5;
+
+}
+.site-footer hr.small
+{
+  margin:20px 0
+}
+.site-footer h6
+{
+  color:#fff;
+  font-size:16px;
+  text-transform:uppercase;
+  margin-top:5px;
+  letter-spacing:2px
+}
+.site-footer a
+{
+  color:#737373;
+}
+.site-footer a:hover
+{
+  color:#3366cc;
+  text-decoration:none;
+}
+.footer-links
+{
+  padding-left:0;
+  list-style:none
+}
+.footer-links li
+{
+  display:block
+}
+.footer-links a
+{
+  color:#737373
+}
+.footer-links a:active,.footer-links a:focus,.footer-links a:hover
+{
+  color:#3366cc;
+  text-decoration:none;
+}
+.footer-links.inline li
+{
+  display:inline-block
+}
+.site-footer .social-icons
+{
+  text-align:right
+}
+.site-footer .social-icons a
+{
+  width:40px;
+  height:40px;
+  line-height:40px;
+  margin-left:6px;
+  margin-right:0;
+  border-radius:100%;
+  background-color:#33353d
+}
+.copyright-text
+{
+  margin:0
+}
+@media (max-width:991px)
+{
+  .site-footer [class^=col-]
+  {
+    margin-bottom:30px
+  }
+}
+@media (max-width:767px)
+{
+  .site-footer
+  {
+    padding-bottom:0
+  }
+  .site-footer .copyright-text,.site-footer .social-icons
+  {
+    text-align:center
+  }
+}
+.social-icons
+{
+  padding-left:0;
+  margin-bottom:0;
+  list-style:none
+}
+.social-icons li
+{
+  display:inline-block;
+  margin-bottom:4px
+}
+.social-icons li.title
+{
+  margin-right:15px;
+  text-transform:uppercase;
+  color:#96a2b2;
+  font-weight:700;
+  font-size:13px
+}
+.social-icons a{
+  background-color:#eceeef;
+  color:#818a91;
+  font-size:16px;
+  display:inline-block;
+  line-height:44px;
+  width:44px;
+  height:44px;
+  text-align:center;
+  margin-right:8px;
+  border-radius:100%;
+  -webkit-transition:all .2s linear;
+  -o-transition:all .2s linear;
+  transition:all .2s linear
+}
+.social-icons a:active,.social-icons a:focus,.social-icons a:hover
+{
+  color:#fff;
+  background-color:#29aafe
+}
+.social-icons.size-sm a
+{
+  line-height:34px;
+  height:34px;
+  width:34px;
+  font-size:14px
+}
+.social-icons a.facebook:hover
+{
+  background-color:#3b5998
+}
+.social-icons a.twitter:hover
+{
+  background-color:#00aced
+}
+.social-icons a.linkedin:hover
+{
+  background-color:#007bb6
+}
+.social-icons a.dribbble:hover
+{
+  background-color:#ea4c89
+}
+@media (max-width:767px)
+{
+  .social-icons li.title
+  {
+    display:block;
+    margin-right:0;
+    font-weight:600
+  }
+}
+
+.footer-container hr {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.social-icons img {
+  width: 34px;
+  height: auto;
+}
+
+.personalLinks {
+
+  
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  background-color: #333;
+  color: white;
+  padding: 10px;
+  box-shadow: 4px 4px 10px rgba(0,0,0,0.2);
+  border-bottom-right-radius: 35px;
+  border-bottom-left-radius: 35px;
+}
+
+.name {
+  margin-bottom: 0;
+  font-size: 15px;
+}
+
+.icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  margin-top: 0;
+}
+
+.btn-floating {
+  border-radius: 50%;
+  width: 27px;
+  height: 27px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.btn-floating i {
+  font-size: 12px;
+}
