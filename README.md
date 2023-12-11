@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Redis-project-management
 =======
 # For MongoDB grading
