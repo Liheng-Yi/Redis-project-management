@@ -36,6 +36,7 @@
                     <th>Client Name</th>
                     <th>Email</th>
                     <th>Address</th>
+                    <th>Visited</th> <!-- New Column for Visited Count -->
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -56,6 +57,8 @@
                                 <%= client.address %>
                             <% } %>
                         </td>
+
+                        <td><%= client.visited %></td> <!-- Display Visited Count Here -->
                         <td>
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton<%= client._id %>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -64,6 +67,8 @@
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton<%= client._id %>">
                                     <a class="dropdown-item modify-item" href="#">Modify</a>
                                     <a class="dropdown-item delete-item" href="#">Delete</a>
+                                    <a class="dropdown-item add-visit-item" href="#">Add visit time</a>
+                                    <a class="dropdown-item minus-visit-item" href="#">Minus visit time</a>
                                 </div>
                             </div>
                         </td>
@@ -74,6 +79,7 @@
       </div>
     </div>
   </div>
+
 
 
   
@@ -182,7 +188,30 @@
       });
     });
 
-  $('.delete-item').on('click', function(e) {
+  $('.add-visit-item').on('click', function(e) {
+      e.preventDefault();
+      const clientID = $(this).closest('tr').data('id');
+      $.ajax({
+          url: `/clients/addvisit/${clientID}`,
+          method: 'PATCH',
+          success: function(response) {
+              window.location.href = '/client';
+          },
+      });
+  });
+  $('.minus-visit-item').on('click', function(e) {
+      e.preventDefault();
+      const clientID = $(this).closest('tr').data('id');
+      $.ajax({
+          url: `/clients/minusvisit/${clientID}`,
+          method: 'PATCH',
+          success: function(response) {
+              window.location.href = '/client';
+          },
+      });
+  });
+
+    $('.delete-item').on('click', function(e) {
       e.preventDefault();
       const clientID = $(this).closest('tr').data('id');
       console.log("!!!", clientID);

@@ -1,5 +1,5 @@
 const { MongoClient } = require('mongodb');
-
+const { createClient } = require('redis');
 async function connect(){
     const uri = "mongodb+srv://eli1838459978:198578ddd@cluster0.zcrzloi.mongodb.net/";
     const client = new MongoClient(uri);
@@ -13,10 +13,9 @@ async function getClientData() {
         
         const database = client.db("ProjectManagement"); 
         const clients = database.collection("clients"); 
-        const query = {}; //to return all documents
+        const query = {}; 
         const cursor = clients.find(query);
         result = await cursor.toArray();
-        
     } catch (e) {
         console.error(e);
     } finally {
@@ -24,6 +23,133 @@ async function getClientData() {
     }
 
     return result;
+}
+
+async function storeVisits() {
+    const redisClient = createClient({
+        url: 'redis://localhost:6379' 
+    });
+
+    const mongoClient = await connect();
+
+    try {
+        await redisClient.connect();
+        await mongoClient.connect();
+
+        const database = mongoClient.db("ProjectManagement"); 
+        const clients = database.collection("clients"); 
+
+        // Retrieve all client IDs from MongoDB
+        const cursor = await clients.find({}, { projection: { _id: 1 } });
+
+        for await (const client of cursor) {
+            const redisKey = `visited:${client._id}`;
+            const exists = await redisClient.exists(redisKey);
+            if (!exists) {
+                // Key does not exist, so initialize it to 0
+                await redisClient.set(redisKey, 0);
+            }
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    } finally {
+
+        await redisClient.disconnect();
+
+
+        await mongoClient.close();
+    }
+}
+
+
+
+async function getVisits() {
+    const redisClient = createClient({
+        url: 'redis://localhost:6379'
+    });
+
+    try {
+        await redisClient.connect();
+        const keys = await redisClient.keys('visited:*');
+        const visits = {};
+        for (const key of keys) {
+            const value = await redisClient.get(key);
+            visits[key] = value;
+        }
+
+        return visits;
+
+    } catch (error) {
+        console.error('Error:', error);
+    } finally {
+        if (redisClient.isOpen) {
+            await redisClient.disconnect(); 
+        }
+    }
+}
+
+async function addVisit(clientID) {
+    const redisClient = createClient({
+        url: 'redis://localhost:6379' 
+    });
+
+    try {
+        await redisClient.connect();
+
+        const redisKey = `visited:${clientID}`;
+        await redisClient.incr(redisKey);
+
+    } catch (error) {
+        console.error('Error:', error);
+    } finally {
+        if (redisClient.isOpen) {
+            await redisClient.disconnect(); 
+        }
+    }
+}
+
+async function minusVisit(clientID) {
+    const redisClient = createClient({
+        url: 'redis://localhost:6379' 
+    });
+
+    try {
+        await redisClient.connect();
+        const redisKey = `visited:${clientID}`;
+        const currentCount = parseInt(await redisClient.get(redisKey), 10);
+        // Only decrement if count is greater than 0
+        if (currentCount > 0) {
+            await redisClient.decr(redisKey);
+        }
+
+    } catch (error) {
+        console.error('Error:', error);
+    } finally {
+        if (redisClient.isOpen) {
+            await redisClient.disconnect(); 
+        }
+    }
+}
+
+
+async function delVisit(clientID) {
+    const redisClient = createClient({
+        url: 'redis://localhost:6379'
+    });
+
+    try {
+        await redisClient.connect();
+        const redisKey = `visited:${clientID}`;
+        await redisClient.del(redisKey);
+        console.log(`Visit record deleted for client ${clientID}`);
+
+    } catch (error) {
+        console.error('Error:', error);
+    } finally {
+        if (redisClient.isOpen) {
+            await redisClient.disconnect(); 
+        }
+    }
 }
 
 
@@ -266,10 +392,12 @@ async function editProject(projectID, projectData) {
 
 module.exports = {
     getClientData, projectsListWithEmployeeNames, addClient, deleteClient, editClient,
-    addProject, deleteProject, editProject
+    addProject, deleteProject, editProject,
+    storeVisits, getVisits, addVisit, minusVisit, delVisit
 
 
 }
+
 
 
 

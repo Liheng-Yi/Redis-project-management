@@ -6,40 +6,70 @@ const path = require('path');
 
 const {
     getClientData, projectsListWithEmployeeNames, addClient, deleteClient, editClient,
-    addProject, deleteProject, editProject
+    addProject, deleteProject, editProject,
+    storeVisits, getVisits, addVisit, minusVisit, delVisit
     
 } = require("../db/mongoDBConnector.js");
 
 router.get('/', async function(req, res, next) {
   const clientData = await getClientData();
   console.log(clientData)
+    
   res.render('client', { title: 'Clients', clientData: clientData});
 
 });
 
-/* GET home page. */
+
 router.get('/client', async function(req, res, next) {
+    await storeVisits();
+    const visitData = await getVisits();
+    const clientData = await getClientData();
+    // append data from client to data from mongo, then pass it to front-end
+    clientData.forEach(client => {
+        const clientIdStr = client._id.toString();
+        const visitCount = visitData[`visited:${clientIdStr}`];
+        client.visited = parseInt(visitCount, 10);
+    });
 
-  const clientData = await getClientData();
-  res.render('client', { title: 'Clients', clientData: clientData});
-
+    res.render('client', { title: 'Clients', clientData: clientData });
 });
 
 
 router.get('/project', async function(req, res, next) {
-
   const clientData = await projectsListWithEmployeeNames();
-
-  
   res.render('project', { title: 'Project', clientData: clientData});
   
 });
 
 
+
+router.patch('/clients/addvisit/:id', async function(req, res) {
+    const clientID = req.params.id;
+    try {
+        await addVisit(clientID);
+        res.status(200).send({ message: 'Visit added successfully' });
+    } catch (error) {
+        res.status(500).send({ message: 'Error adding visit' });
+    }
+});
+
+
+router.patch('/clients/minusvisit/:id', async function(req, res) {
+    const clientID = req.params.id;
+    try {
+        await minusVisit(clientID);
+        res.status(200).send({ message: 'Visit subtracted successfully' });
+    } catch (error) {
+        console.error('Error subtracting visit:', error);
+        res.status(500).send({ message: 'Error subtracting visit' });
+    }
+});
+
+
+
+
 router.post('/clients', async function(req, res) {
     const { name, email, address } = req.body;
-
-    // Create a new client object
     const newClient = {
         client_name: name,
         email: email,
@@ -77,22 +107,25 @@ router.post('/projects', async function(req, res) {
 });
 
 router.delete('/clients/:id', async function(req, res) {
-
     const clientID = req.params.id;
+
     try {
-        const result = await deleteClient(clientID);
-        res.status(201).json(result);
+        const deleteResult = await deleteClient(clientID);
+        await delVisit(clientID);
+
+        res.status(200).json({
+            message: 'Client and visit record deleted successfully',
+            deleteResult: deleteResult
+        });
     } catch (e) {
         console.error(e);
         res.status(500).send('Internal Server Error');
     }
-
 });
 
 
-router.delete('/projects/:id', async function(req, res) {
-    console.log("111")
-});
+
+
 
 
 router.patch('/clients/:id', async function(req, res) {
