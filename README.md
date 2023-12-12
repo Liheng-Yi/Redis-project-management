@@ -20,3 +20,6 @@ D: Delete visited:clientId in Redis when the client is removed.
 
 ## APIs for Redis:
 `storeVisits(), getVisits(), addVisit(), minusVisit(), delVisit()`
+
+## Where I implemented the APIs:
+./db/mongoDBConnector.js
