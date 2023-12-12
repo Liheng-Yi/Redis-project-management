@@ -18,5 +18,5 @@ U: Add one or minus one in Redis for visited:clientId upon client visit.
 D: Delete visited:clientId in Redis when the client is removed.
 
 
-APIs for Redis:
+## APIs for Redis:
 `storeVisits(), getVisits(), addVisit(), minusVisit(), delVisit()`
