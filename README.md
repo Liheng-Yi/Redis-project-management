@@ -1,7 +1,11 @@
-# For MongoDB grading
+# For Redis db grading
 please go to ./Redis_grading
 
-## for your reference
+## To run
+`npm install`
+`npm start`
+
+## For your reference
 My Redis database is a supplement db that has a string-type data structure that
 stores the key `visited:clientId`, with its value `visited`.
 
@@ -14,3 +18,5 @@ U: Add one or minus one in Redis for visited:clientId upon client visit.
 D: Delete visited:clientId in Redis when the client is removed.
 
 
+APIs for Redis:
+`storeVisits(), getVisits(), addVisit(), minusVisit(), delVisit()`
